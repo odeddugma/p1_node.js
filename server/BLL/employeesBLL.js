@@ -1,29 +1,17 @@
 const Employee = require("../models/employeeModel");
 
 const getEmployees = async (filters) => {
-	console.log(filters);
 	try {
-		if (filters.hasOwnProperty("_id")) {
-			const employee = await Employee.findOne(filters);
-
-			if (!employee) {
-				throw new Error(`Could not find employee with id: ${id}`);
-			}
-
-			return employee;
-		} else {
-			const employees = await Employee.find(filters);
-			return employees;
-		}
+		const employees = await Employee.find(filters);
+		return employees;
 	} catch (error) {
 		return error.message;
 	}
 };
 
 const getEmployeeById = async (id) => {
-	console.log(id);
 	try {
-		const employee = await Employee.findOne(id);
+		const employee = await Employee.findOne({ _id: id });
 
 		if (!employee) {
 			throw new Error(`Could not find employee with id: ${id}`);
