@@ -15,10 +15,12 @@ connectDB();
 // API routes
 const usersRouter = require("./routers/usersRouter");
 const employeesRouter = require("./routers/employeesRouter");
+const departmentsRouter = require("./routers/departmentsRouter");
 
 // API routers
 app.use("/api/users", usersRouter);
 app.use("/api/employees", employeesRouter);
+app.use("/api/departments", departmentsRouter);
 
 app.listen(port, () => {
 	console.log(`listening on http://localhost:${port}`);

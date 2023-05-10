@@ -13,7 +13,8 @@ router.route("/").get(async (req, res) => {
 
 router.route("/:id").get(async (req, res) => {
 	const { id } = req.params;
-	const employee = await employeesBLL.getEmployeeById(id);
+	// const employee = await employeesBLL.getEmployeeById({ _id: id });
+	const employee = await employeesBLL.getEmployees({ _id: id });
 	res.json(employee);
 });
 
