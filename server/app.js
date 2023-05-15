@@ -24,6 +24,20 @@ app.use("/api/employees", employeesRouter);
 app.use("/api/departments", departmentsRouter);
 app.use("/api/shifts", shiftsRouter);
 
+// Reset credits number
+setInterval(() => {
+	const date = new Date();
+	const [h, m] = [date.getHours(), date.getMinutes()];
+
+	console.log(date);
+	console.log(h);
+	console.log(m);
+	if (h === 00 && m === 00) {
+		const { resetCredits } = require("./utils/manageCredits");
+		resetCredits();
+	}
+}, 60000);
+
 app.listen(port, () => {
 	console.log(`listening on http://localhost:${port}`);
 });

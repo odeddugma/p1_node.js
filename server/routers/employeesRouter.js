@@ -5,6 +5,15 @@ const router = express.Router();
 
 // Entrt point: 'http://localhost:8000/api/employees'
 
+// Protect these routes with middleware
+const protect = require("../middlewares/authMiddleware");
+const credits = require("../middlewares/creditsMiddleware");
+router.use((req, res, next) => {
+	protect(req, res, next);
+	credits();
+});
+
+// Routes
 router.route("/").get(async (req, res) => {
 	const filters = req.query;
 	const employees = await employeesBLL.getEmployees(filters);

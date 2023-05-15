@@ -5,6 +5,13 @@ const router = express.Router();
 
 // Entrt point: 'http://localhost:8000/api/shifts'
 
+// Protect these routes with middleware
+const protect = require("../middlewares/authMiddleware");
+router.use((req, res, next) => {
+	protect(req, res, next);
+});
+
+// Routes
 router.route("/").get(async (req, res) => {
 	const filters = req.query;
 	const shifts = await shiftsBLL.getAllShifts(filters);

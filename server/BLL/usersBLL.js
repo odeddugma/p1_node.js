@@ -15,12 +15,16 @@ const getUser = async (email, username) => {
 			throw new Error("Invalid username or email");
 		}
 
-		// Get the user from database at 'factoryDB.users'
+		// Get the user from database at 'factoryDB.users' and add
 		const userDB = await User.findOne({ jsonplaceholderID: user.id });
 
-		user._id = userDB.id;
+		// Create access token
+		const SECRET_KEY = "someKey";
+		const accessToken = jwt.sign({ id: userDB.id }, SECRET_KEY, {
+			expiresIn: "30d",
+		});
 
-		return user;
+		return accessToken;
 	} catch (error) {
 		return error.message;
 	}

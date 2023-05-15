@@ -1,4 +1,5 @@
 const Department = require("../models/departmentModel");
+const Employee = require("../models/employeeModel");
 
 const getDepartments = async (filters) => {
 	try {
@@ -26,6 +27,13 @@ const getDepartmentById = async (id) => {
 const addDepartment = async (departmentObj) => {
 	try {
 		const department = new Department(departmentObj);
+
+		// Check if employee exists
+		const employee = await Employee.findById({ _id: department.manager });
+		if (!employee) {
+			throw new Error(`Could not find employee with id: ${department.manager}`);
+		}
+
 		return await department.save();
 	} catch (error) {
 		return error.message;

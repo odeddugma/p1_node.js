@@ -1,4 +1,5 @@
 const Employee = require("../models/employeeModel");
+const Department = require("../models/departmentModel");
 
 const getEmployees = async (filters) => {
 	try {
@@ -26,6 +27,17 @@ const getEmployeeById = async (id) => {
 const addEmployee = async (employeeObj) => {
 	try {
 		const employee = new Employee(employeeObj);
+
+		// Check if department exists
+		const department = await Department.findById({
+			_id: employee.departmentID,
+		});
+		if (!department) {
+			throw new Error(
+				`Could not find department with id: ${employee.departmentID}`
+			);
+		}
+
 		return await employee.save();
 	} catch (error) {
 		return error.message;
@@ -40,6 +52,14 @@ const updateEmployee = async (id, employeeObj) => {
 
 		if (!employee) {
 			throw new Error(`Could not update employee with id: ${id}`);
+		}
+
+		// Check if department exists
+		const department = await Department.findOne({ _id: employee.departmentID });
+		if (!department) {
+			throw new Error(
+				`Could not find department with id: ${employee.departmentID}`
+			);
 		}
 
 		return {

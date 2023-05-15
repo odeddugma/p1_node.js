@@ -18,6 +18,7 @@ const employeeSchema = new mongoose.Schema(
 		},
 		departmentID: {
 			type: ObjectId,
+			required: [true, "Please enter department"],
 		},
 	},
 	{ versionKey: false }
