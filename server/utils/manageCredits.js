@@ -1,15 +1,11 @@
 const User = require("../models/userModel");
 
-const reduceCredit = async (req, res) => {
-	if (req.user.actions_left === 0) {
-		return Error("You finished your Credits for today.");
-	}
-
+const reduceCredit = async (user) => {
 	await User.findByIdAndUpdate(
-		req.user.id,
+		user._id,
 		{
-			...req.user,
-			actions_left: req.user.actions_left--,
+			...user,
+			actions_left: user.actions_left--,
 		},
 		{ returnDocument: "after" }
 	);
