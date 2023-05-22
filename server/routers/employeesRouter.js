@@ -7,10 +7,10 @@ const router = express.Router();
 
 // Protect these routes with middleware
 const protect = require("../middlewares/authMiddleware");
-const checkCredits = require("../middlewares/creditsMiddleware");
-router.use(async (req, res, next) => {
-	await protect(req, res, next);
-	await checkCredits(req, res, next);
+const credits = require("../middlewares/creditsMiddleware");
+router.use((req, res, next) => {
+	protect(req, res, next);
+	credits();
 });
 
 // Routes
