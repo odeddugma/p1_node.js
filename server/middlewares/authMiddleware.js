@@ -19,7 +19,7 @@ const protect = async (req, res, next) => {
 			// Get user from the decoded token
 			req.user = await User.findById(decodedToken.id);
 
-			// Reduce credits after action
+			// Reduce credits for each action
 			const noCredits = await reduceCredit(req, res);
 			if (noCredits) {
 				throw new Error(noCredits.message);
